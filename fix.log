@@ -1,0 +1,5 @@
+2026.6.13
+1.删除了proprietary-files.txt的bolbs引用与lineageos23.2重复的 blobs 引用,重复的已在blob_list.txt列出
+2.修复AndroidProducts的引用错误,lineageos_manet改为lineageos_generic.mk
+同时给COMMON行打上注释.
+3.修改AndroidProducts.mk与重命名lineage_generic.mk,能够读取配置
