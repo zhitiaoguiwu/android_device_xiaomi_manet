@@ -1,0 +1,60 @@
+gzvm.ko:
+kheaders.ko:
+zsmalloc.ko:
+libarc4.ko:
+zram.ko: zsmalloc.ko
+mii.ko:
+can-dev.ko:
+vcan.ko: can-dev.ko
+slcan.ko: can-dev.ko
+ppp_generic.ko: slhc.ko
+bsd_comp.ko: ppp_generic.ko slhc.ko
+ppp_deflate.ko: ppp_generic.ko slhc.ko
+ppp_mppe.ko: libarc4.ko ppp_generic.ko slhc.ko
+pppox.ko: ppp_generic.ko slhc.ko
+pptp.ko: pppox.ko ppp_generic.ko slhc.ko
+slhc.ko:
+wwan.ko:
+rtl8150.ko:
+r8152.ko: mii.ko
+asix.ko: usbnet.ko mii.ko
+ax88179_178a.ko: usbnet.ko mii.ko
+cdc_ether.ko: usbnet.ko mii.ko
+cdc_eem.ko: usbnet.ko mii.ko
+usbnet.ko: mii.ko
+cdc_ncm.ko: cdc_ether.ko usbnet.ko mii.ko
+aqc111.ko: usbnet.ko mii.ko
+r8153_ecm.ko: r8152.ko cdc_ether.ko usbnet.ko mii.ko
+cdc-acm.ko:
+usbserial.ko:
+ftdi_sio.ko: usbserial.ko
+hci_uart.ko: btqca.ko btbcm.ko bluetooth.ko rfkill.ko
+btsdio.ko: bluetooth.ko rfkill.ko
+btbcm.ko: bluetooth.ko rfkill.ko
+btqca.ko: bluetooth.ko rfkill.ko
+8021q.ko:
+can.ko:
+can-raw.ko: can.ko
+can-bcm.ko: can.ko
+can-gw.ko: can.ko
+bluetooth.ko: rfkill.ko
+rfcomm.ko: bluetooth.ko rfkill.ko
+hidp.ko: bluetooth.ko rfkill.ko
+l2tp_core.ko:
+l2tp_ppp.ko: l2tp_core.ko pppox.ko ppp_generic.ko slhc.ko
+tipc.ko:
+diag.ko: tipc.ko
+rfkill.ko:
+6lowpan.ko:
+nhc_dest.ko: 6lowpan.ko
+nhc_fragment.ko: 6lowpan.ko
+nhc_hop.ko: 6lowpan.ko
+nhc_ipv6.ko: 6lowpan.ko
+nhc_mobility.ko: 6lowpan.ko
+nhc_routing.ko: 6lowpan.ko
+nhc_udp.ko: 6lowpan.ko
+ieee802154_6lowpan.ko: ieee802154.ko 6lowpan.ko
+ieee802154.ko:
+ieee802154_socket.ko: ieee802154.ko
+mac802154.ko: ieee802154.ko
+nfc.ko: rfkill.ko

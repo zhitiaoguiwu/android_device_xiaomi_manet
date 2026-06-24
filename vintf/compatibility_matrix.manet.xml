@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<compatibility-matrix version="7.0" type="framework">
+    <hal format="aidl" optional="true">
+        <name>android.hardware.vibrator</name>
+        <version>1</version>
+        <interface>
+            <name>IVibrator</name>
+            <instance>vibratorfeature</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>com.android.ozoaudio.notify</name>
+        <version>1</version>
+        <interface>
+            <name>IOzoNotify</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.cit.bluetooth</name>
+        <version>1</version>
+        <interface>
+            <name>IBluetoothService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.cit.wifi</name>
+        <version>1</version>
+        <interface>
+            <name>IWifiService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.batteryantiaging</name>
+        <version>1</version>
+        <interface>
+            <name>IBatteryAntiAging</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.blackbox</name>
+        <version>1</version>
+        <interface>
+            <name>IBlackboxImpl</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.camera.synthetic</name>
+        <version>1</version>
+        <interface>
+            <name>IVirtualCameraRegistrar</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.cld_aidl</name>
+        <version>1</version>
+        <interface>
+            <name>ICld</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.fbo</name>
+        <version>1</version>
+        <interface>
+            <name>IFbo</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.micharge</name>
+        <version>2</version>
+        <interface>
+            <name>IMiCharge</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.mikeybag</name>
+        <version>1</version>
+        <interface>
+            <name>IMiKeyBagService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.mimd2</name>
+        <version>1</version>
+        <interface>
+            <name>IMimd</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.miperf2</name>
+        <version>1</version>
+        <interface>
+            <name>IMiPerf</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.misauth</name>
+        <version>1</version>
+        <interface>
+            <name>IMiSharedAuth</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.misys.common</name>
+        <version>3</version>
+        <interface>
+            <name>IHypSysIntl</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.misys.common</name>
+        <version>3</version>
+        <interface>
+            <name>IMiSysImpl</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.misys.core</name>
+        <version>1</version>
+        <interface>
+            <name>IMiSysCore</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.mitrustedui</name>
+        <version>1</version>
+        <interface>
+            <name>IMiTrustedUIService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.mrm</name>
+        <version>1</version>
+        <interface>
+            <name>IMiCertificate</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.mrm</name>
+        <version>1</version>
+        <interface>
+            <name>IMrm</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.mrm</name>
+        <version>1</version>
+        <interface>
+            <name>IMrmRemoteAuth</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.otrpagent2</name>
+        <version>1</version>
+        <interface>
+            <name>IOTrPAgent</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.seaaudio</name>
+        <version>1</version>
+        <interface>
+            <name>ISeaAudio</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.seccam</name>
+        <version>1</version>
+        <interface>
+            <name>IMiSecCam</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.swap</name>
+        <version>1</version>
+        <interface>
+            <name>ISwap</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.videoservice</name>
+        <version>3</version>
+        <interface>
+            <name>IVideoService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.hardware.vsimapp</name>
+        <version>1</version>
+        <interface>
+            <name>IVSIMService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.xiaomi.modem.qms</name>
+        <version>1.0</version>
+        <interface>
+            <name>IMiQms</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="aidl" optional="true">
+        <name>vendor.xiaomi.sensor.citsensorservice</name>
+        <version>1</version>
+        <interface>
+            <name>ICitSensorService</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+</compatibility-matrix>

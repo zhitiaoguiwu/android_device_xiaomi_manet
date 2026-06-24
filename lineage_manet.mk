@@ -15,11 +15,14 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
 PRODUCT_DEVICE := manet
 PRODUCT_NAME := lineage_manet
-PRODUCT_BRAND := Android
-PRODUCT_MODEL := mainline
+PRODUCT_BRAND := Redmi
+PRODUCT_MODEL := 23177RK66C
 PRODUCT_MANUFACTURER := xiaomi
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
+#
+# 跳过 init 脚本验证（vendor blobs 引用了构建系统不认识的 HIDL 接口）
+PRODUCT_SKIP_INIT_VERIFICATION := true
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildDesc="missi-user 16 BP2A.250605.031.A3 OS3.0.9.0.WNMCNXM release-keys" \

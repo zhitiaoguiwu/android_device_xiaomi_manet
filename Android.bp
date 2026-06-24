@@ -5,3 +5,18 @@
 
 soong_namespace {
 }
+
+cc_prebuilt_library_shared {
+    name: "libOpenCL",
+    owner: "xiaomi",
+    strip: { none: true },
+    target: {
+        android_arm64: {
+            srcs: ["prebuilts/libOpenCL.so"],
+            shared_libs: ["libc++", "libc", "libm", "libdl"],
+        },
+    },
+    compile_multilib: "64",
+    prefer: true,
+    soc_specific: true,
+}

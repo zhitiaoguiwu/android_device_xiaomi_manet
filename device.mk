@@ -3,17 +3,18 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+# Disable strict verification of uses-libraries declarations vs
+# actual AIDL interface versions, needed because proprietary blobs
+# from HyperOS may reference AIDL versions that differ from the
+# LineageOS build environment.
+PRODUCT_BROKEN_VERIFY_USES_LIBRARIES := true
+
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
 # A/B
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
-
-PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-impl \
-    android.hardware.boot@1.2-impl.recovery \
-    android.hardware.boot@1.2-service
-
+LOCAL_PATH := $(call my-dir)
 PRODUCT_PACKAGES += \
     update_engine \
     update_engine_sideload \
@@ -43,11 +44,7 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock \
     fastbootd
 
-# Health
-PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-service
-
+ 
 # Kernel
 PRODUCT_ENABLE_UFFD_GC := false
 
@@ -119,14 +116,29 @@ PRODUCT_PACKAGES += \
     init.target.rc \
     init.recovery.hardware.rc \
     init.recovery.qcom.rc \
-    miui.factoryreset.rc \
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_VENDOR_RAMDISK_OUT)/first_stage_ramdisk/fstab.qcom
+    device/xiaomi/manet/rootdir/etc/fstab.qcom:$(TARGET_VENDOR_RAMDISK_OUT)/first_stage_ramdisk/fstab.qcom
+
+
+# Keymint
+PRODUCT_PACKAGES += \
+    android.hardware.hardware_keystore.xml \
+    lib_android_keymaster_keymint_utils \
+    libsensorndkbridge \
+    wpa_supplicant \
+    libcamera2ndk_vendor
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.keystore.app_attest_key.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.keystore.app_attest_key.xml \
+    frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
+
+DEVICE_MANIFEST_PINEAPPLE_FILES += \
+    vendor/xiaomi/manet/proprietary/vendor/etc/vintf/manifest/android.hardware.health-service.qti.xml:$(TARGET_COPY_OUT_VENDOR)/etc/vintf/manifest/android.hardware.health-service.qti.xml
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    $(LOCAL_PATH)
+    device/xiaomi/manet
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/xiaomi/manet/manet-vendor.mk)

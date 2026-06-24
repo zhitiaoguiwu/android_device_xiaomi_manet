@@ -20,15 +20,29 @@ AB_OTA_PARTITIONS += \
     dtbo \
     vendor \
     odm
-BOARD_USES_RECOVERY_AS_BOOT := true
+#BOARD_USES_RECOVERY_AS_BOOT := true
+#init_boot
+BOARD_BUILD_INIT_BOOT_IMAGE := true
+BOARD_INIT_BOOT_HEADER_VERSION := 4
+BOARD_INIT_BOOT_MKBOOTIMG_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
 
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := erofs
+
+BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
+BOARD_VENDOR_BOOT_HEADER_VERSION := 4
+
+
+BOARD_SYSTEM_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
+BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := erofs
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := erofs
+BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := erofs
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 := 
-TARGET_CPU_VARIANT := manet
-TARGET_CPU_VARIANT_RUNTIME := kryo300
+TARGET_CPU_VARIANT := cortex-a76
+TARGET_CPU_VARIANT_RUNTIME := cortex-a76
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := manet
@@ -39,7 +53,11 @@ BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 swinfo.fingerprint=manet:14/OS3.0.9.0.WNMCNXM:user mtdoops.fingerprint=manet:14/OS3.0.9.0.WNMCNXM:user bootconfig
 BOARD_KERNEL_PAGESIZE := 4096
+
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+BOARD_INIT_BOOT_MKBOOTIMG_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
+BOARD_VENDOR_BOOT_MKBOOTIMG_ARGS += --header_version $(BOARD_VENDOR_BOOT_HEADER_VERSION)
+
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 BOARD_KERNEL_SEPARATED_DTBO := true
@@ -55,8 +73,19 @@ BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 BOARD_INCLUDE_DTB_IN_BOOTIMG := 
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilts/dtbo.img
 BOARD_KERNEL_SEPARATED_DTBO := 
+# Kernel modules
+KERNEL_MODULES_DIR := $(DEVICE_PATH)/prebuilts
+ 
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_MODULES_DIR)/vendor_ramdisk/modules.load 2>/dev/null))
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_MODULES_DIR)/vendor_ramdisk/modules.load.recovery 2>/dev/null))
+ 
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_MODULES_DIR)/vendor_dlkm/modules.load 2>/dev/null))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(wildcard $(KERNEL_MODULES_DIR)/vendor_ramdisk/*.ko)
+BOARD_VENDOR_KERNEL_MODULES := $(wildcard $(KERNEL_MODULES_DIR)/vendor_dlkm/*.ko)
+BOARD_SYSTEM_KERNEL_MODULES := $(wildcard $(KERNEL_MODULES_DIR)/system_dlkm/*.ko)
 endif
-
+#
+TARGET_FSTAB := device/xiaomi/manet/rootdir/etc/fstab.qcom 
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
@@ -107,11 +136,50 @@ BOARD_AVB_RECOVERY_ROLLBACK_INDEX := 1
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 BOARD_AVB_VENDOR_BOOT_KEY_PATH := external/avb/test/data/testkey_rsa4096.pem
 BOARD_AVB_VENDOR_BOOT_ALGORITHM := SHA256_RSA4096
-BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := 1
-BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 1
+BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX := 2
+BOARD_AVB_VENDOR_BOOT_ROLLBACK_INDEX_LOCATION := 2
 
 # VINTF
-DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
+    $(DEVICE_PATH)/vintf/compatibility_matrix.device.xml \
+    $(DEVICE_PATH)/vintf/compatibility_matrix.xiaomi.xml \
+    $(DEVICE_PATH)/vintf/compatibility_matrix.manet.xml \
+    hardware/qcom-caf/common/vendor_framework_compatibility_matrix.xml
 
+DEVICE_FRAMEWORK_MANIFEST_FILE += \
+    $(DEVICE_PATH)/vintf/framework_manifest.xml
+
+DEVICE_MATRIX_FILE := \
+    $(DEVICE_PATH)/vintf/compatibility_matrix.xml \
+    hardware/qcom-caf/common/compatibility_matrix.xml
+
+DEVICE_MANIFEST_SKUS := pineapple
+DEVICE_MANIFEST_PINEAPPLE_FILES := \
+    $(DEVICE_PATH)/vintf/manifest_xiaomi.xml \
+    $(DEVICE_PATH)/vintf/manifest_pineapple.xml \
+    hardware/qcom-caf/sm8650/audio/primary-hal/configs/common/manifest_non_qmaa.xml \
+    hardware/qcom-caf/sm8650/audio/primary-hal/configs/common/manifest_non_qmaa_extn.xml
+
+#
+TARGET_FS_CONFIG_GEN += $(DEVICE_PATH)/config.fs
+#
+TARGET_COPY_OUT_VENDOR := vendor
+TARGET_COPY_OUT_PRODUCT := product
+TARGET_COPY_OUT_SYSTEM_EXT := system_ext
+TARGET_COPY_OUT_ODM := odm
+TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
+TARGET_COPY_OUT_SYSTEM_DLKM := system_dlkm
+#
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+#
+SKIP_APEX_SEPOLICY_TESTS := true
+#
+BUILD_BROKEN_VINTF_COMPATIBILITY_CHECK := true
+#
+BUILD_BROKEN_MISSING_HIDL_INTERFACES := true
+# Sepolicy
+include device/qcom/sepolicy_vndr/SEPolicy.mk
+BOARD_VENDOR_SEPOLICY_DIRS += device/xiaomi/manet/sepolicy/vendor
+BOARD_PRIVATE_SEPOLICY_DIRS += device/xiaomi/manet/sepolicy/private
 # Inherit the proprietary files
 include vendor/xiaomi/manet/BoardConfigVendor.mk

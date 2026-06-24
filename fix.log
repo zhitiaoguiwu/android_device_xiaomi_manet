@@ -3,3 +3,17 @@
 2.修复AndroidProducts的引用错误,lineageos_manet改为lineageos_generic.mk
 同时给COMMON行打上注释.
 3.修改AndroidProducts.mk与重命名lineage_generic.mk,能够读取配置
+2026.6.22
+1.更新了AIDL接口(请看extract-files.py)，删除了与投屏相关的库(libmiracastsystem)
+2.删除重复的库文件，删除软链接，删除部分用不上的库文件
+3.从sm8650通用设备树项目(device_xiaomi_sm8650_common)借来了manifest.xml文件(虽然不明确有无bug)
+4.能通过soong检测了.
+2026.6.23
+1.可以说完全删除了冲突的库.
+2.从sm8650公用设备树项目搬运了selinux策略.
+3.添加了vendor_ramdisk, vendor_dlkm,system_dlkm
+4.添加修复小米相机xml规则不规范
+5.添加BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true(主要是跳过小米相机依赖)
+2026.6.24
+1.修复了编译的报错
+2.能够出包
