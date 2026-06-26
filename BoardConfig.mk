@@ -26,32 +26,47 @@ BOARD_BUILD_INIT_BOOT_IMAGE := true
 BOARD_INIT_BOOT_HEADER_VERSION := 4
 BOARD_INIT_BOOT_MKBOOTIMG_ARGS += --header_version $(BOARD_INIT_BOOT_HEADER_VERSION)
 
-BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := erofs
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 
-BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
+BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_VENDOR_BOOT_HEADER_VERSION := 4
 
-
-BOARD_SYSTEM_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
-BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := erofs
-BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := erofs
-BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := erofs
+BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_SYSTEM_DLKMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_ABI2 := 
-TARGET_CPU_VARIANT := cortex-a76
-TARGET_CPU_VARIANT_RUNTIME := cortex-a76
+TARGET_CPU_VARIANT := generic
+TARGET_CPU_VARIANT_RUNTIME := kryo300
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := manet
 TARGET_NO_BOOTLOADER := true
 
 # Kernel
+BOARD_USES_GENERIC_KERNEL_IMAGE := true
+BOARD_RAMDISK_USE_LZ4 := true
 BOARD_BOOT_HEADER_VERSION := 4
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_CMDLINE := video=vfb:640x400,bpp=32,memsize=3072000 swinfo.fingerprint=manet:14/OS3.0.9.0.WNMCNXM:user mtdoops.fingerprint=manet:14/OS3.0.9.0.WNMCNXM:user bootconfig
+BOARD_KERNEL_CMDLINE := \
+    video=vfb:640x400,bpp=32,memsize=3072000 \
+    disable_dma32=on \
+    swinfo.fingerprint=$(LINEAGE_VERSION) \
+    mtdoops.fingerprint=$(LINEAGE_VERSION)
+
+OARD_BOOTCONFIG := \
+    androidboot.hardware=qcom \
+    androidboot.hypervisor.protected_vm.supported=0 \
+    androidboot.load_modules_parallel=true \
+    androidboot.memcg=1 \
+    androidboot.usbcontroller=a600000.dwc3 \
+    androidboot.vendor.qspa=true \
+    androidboot.console=0
+
 BOARD_KERNEL_PAGESIZE := 4096
 
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
@@ -68,11 +83,9 @@ TARGET_KERNEL_SOURCE := kernel/xiaomi/manet
 TARGET_FORCE_PREBUILT_KERNEL := true
 ifeq ($(TARGET_FORCE_PREBUILT_KERNEL),true)
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilts/kernel
-TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilts/dtb.img
-BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
-BOARD_INCLUDE_DTB_IN_BOOTIMG := 
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilts/dtb.img 
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilts/dtbo.img
-BOARD_KERNEL_SEPARATED_DTBO := 
+BOARD_KERNEL_SEPARATED_DTBO := true
 # Kernel modules
 KERNEL_MODULES_DIR := $(DEVICE_PATH)/prebuilts
  
@@ -181,5 +194,6 @@ BUILD_BROKEN_MISSING_HIDL_INTERFACES := true
 include device/qcom/sepolicy_vndr/SEPolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += device/xiaomi/manet/sepolicy/vendor
 BOARD_PRIVATE_SEPOLICY_DIRS += device/xiaomi/manet/sepolicy/private
+#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 # Inherit the proprietary files
 include vendor/xiaomi/manet/BoardConfigVendor.mk

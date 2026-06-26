@@ -14,6 +14,10 @@
 3.添加了vendor_ramdisk, vendor_dlkm,system_dlkm
 4.添加修复小米相机xml规则不规范
 5.添加BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true(主要是跳过小米相机依赖)
-2026.6.24
-1.修复大量的编译的报错
-2.能够出包,但刷入失败,正在排查问题
+2026.6.25
+1.更改挂载分区（刷入正常了）
+2.修复dtbo是否独立分区的逻辑还有dtb挂载逻辑.
+2026.6.26
+1.添加vendor_ramdisk_available
+注意:本设备树开不了机，我也不知怎么修开机.......,总之更新缓慢.
+计划：1.修复不开机2.给odm瘦身
