@@ -58,7 +58,7 @@ BOARD_KERNEL_CMDLINE := \
     swinfo.fingerprint=$(LINEAGE_VERSION) \
     mtdoops.fingerprint=$(LINEAGE_VERSION)
 
-OARD_BOOTCONFIG := \
+BOARD_BOOTCONFIG := \
     androidboot.hardware=qcom \
     androidboot.hypervisor.protected_vm.supported=0 \
     androidboot.load_modules_parallel=true \
